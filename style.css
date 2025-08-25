@@ -1,159 +1,25 @@
- * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: Arial, Helvetica, sans-serif;
-    }
 
-    body {
-      /* background: linear-gradient(135deg, #4f46e5, #3b82f6); */
-      height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
+    .nav{
 
-    .container {
-      background: #fff;
-      padding: 2rem 2.5rem;
-      border-radius: 12px;
-      box-shadow: 0px 8px 20px rgba(0,0,0,0.15);
-      width: 100%;
-      max-width: 400px;
-      text-align: center;
-      
     }
-
-    h1 {
-      margin-bottom: 1.5rem;
-      font-size: 1.8rem;
-      color: #333;
-    }
-
-    form {
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-    }
-
-    label {
-      text-align: left;
-      font-weight: 600;
-      font-size: 0.9rem;
-      color: #444;
-    }
-
-    input {
-      padding: 0.75rem;
-      border-radius: 6px;
-      border: 1px solid #ccc;
-      outline: none;
-      font-size: 1rem;
-      transition: border 0.3s ease;
-    }
-
-    input:focus {
-      border-color: #4f46e5;
-      box-shadow: 0 0 0 2px rgba(79,70,229,0.2);
-    }
-
-    .btn {
-      background: #4f46e5;
-      color: #fff;
-      font-weight: bold;
-      padding: 0.75rem;
-      border-radius: 6px;
-      border: none;
-      cursor: pointer;
-      transition: background 0.3s ease, transform 0.2s;
-    }
-
-    .btn:hover {
-      background: #4338ca;
-      transform: translateY(-2px);
-    }
-
-    .signup {
-      margin-top: 2rem;
-    }
-
-    .signup h2 {
-      font-size: 1.2rem;
-      margin-bottom: 0.8rem;
-      color: #333;
-    }
-
-    .signup a {
-      display: inline-block;
-      text-decoration: none;
-      background: #10b981;
-      color: #fff;
-      padding: 0.75rem 1.5rem;
-      border-radius: 6px;
-      font-weight: bold;
-      transition: background 0.3s ease, transform 0.2s;
-    }
-
-    .signup a:hover {
-      background: #059669;
-      transform: translateY(-2px);
-    }
-     body {
-      margin: 0;
-      padding: 0;
-      font-family: Arial, sans-serif;
-    }
-
-    .video-section {
-      position: relative;
-      height: 100vh; /* full screen */
-      overflow: hidden;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #fff;
-      text-align: center;
-    }
-
-    .video-section video {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      min-width: 100%;
-      min-height: 100%;
-      width: auto;
+    #logo{
+      width: 200px;
       height: auto;
-      z-index: -1;
-      transform: translate(-50%, -50%);
-      object-fit: cover; /* makes it nicely fill */
     }
-
-    .video-overlay {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.4); /* dark overlay for readability */
-    }
-
-    .content {
-      position: relative;
-      z-index: 1;
-    }
-
-    .content h1 {
-      font-size: 3rem;
-      margin-bottom: 1rem;
-    }
-
-    .content p {
-      font-size: 1.2rem;
-      max-width: 600px;
+    #search{
+      padding: 2rem;
       margin: auto;
+      font-size: 28px;
+      display: flex;
+      color: blue;
     }
-    .hero-container{
-      display: grid;
-      grid-template-columns: repeat(2,1fr);
+    button{
+      background-color: gray;
+      padding: 0.25rem;
 
+    }
+    button:hover{
+      background-color: grey;
+      border: 1px solid black;
+      color: white;
     }

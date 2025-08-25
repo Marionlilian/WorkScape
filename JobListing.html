@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>JobListings</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body>
+    <header
+      class="body-font bg-gradient-to-r from-indigo-600 to-blue-600 text-white"
+    >
+      <div
+        class="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center"
+      >
+        <a
+          class="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0"
+        >
+          <img src="Images/WorkScape logo1.png" alt="logo" id="logo" />
+          <!-- <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-10 h-10 text-white p-2 bg-indigo-500 rounded-full" viewBox="0 0 24 24">
+        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
+      </svg> -->
+        </a>
+        <nav
+          class="md:ml-auto flex flex-wrap items-center text-base justify-center"
+        >
+          <a href="index.html" class="mr-5 hover:text-gray-900">Home</a>
+          <a href="Dashboard.html" class="mr-5 hover:text-gray-900"
+            >Dashboard</a
+          >
+          <a href="JobListing.html" class="mr-5 hover:text-gray-900"
+            >Job Listings</a
+          >
+          <a class="mr-5 hover:text-gray-900">Profile</a>
+        </nav>
+        <button
+          class="inline-flex items-center bg-blue-700 border-0 py-1 px-3 focus:outline-none hover:bg-indigo-800 rounded text-base mt-4 md:mt-0"
+        >
+          Log Out
+        </button>
+      </div>
+    </header>
+    <div>
+      <form id="search" class="p-4 flex gap-4 items-center text-xl">
+        <label for="searchby">Search jobs by:</label>
+
+        <select id="searchby" class="p-2 border rounded">
+          <option value="title">Job Title</option>
+          <option value="location">Location</option>
+          <option value="category">Category</option>
+        </select>
+
+        <input
+          type="text"
+          id="searchQuery"
+          placeholder="Enter keyword..."
+          class="p-2 border rounded w-1/3"
+        />
+
+        <button
+          type="submit"
+          class="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700"
+        >
+          Search
+        </button>
+      </form>
+
+      <div id="jobs" class="mt-6 grid grid-cols-3 gap-4 p-2"></div>
+    </div>
+    <script src="script.js"></script>
+   
+  </body>
+</html>

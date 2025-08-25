@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+     <script src="https://cdn.tailwindcss.com"></script>
+     <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="body-font bg-gradient-to-r from-indigo-600 to-blue-600 text-white">
+  <div class="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
+    <a class="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0">
+        <img src="Images/WorkScape logo1.png" alt="logo" id="logo">
+    </a>
+    <nav class="md:ml-auto flex flex-wrap items-center text-base justify-center">
+      <a href="index.html" class="mr-5 hover:text-gray-900">Home</a>
+      <a href="Dashboard.html" class="mr-5 hover:text-gray-900">Dashboard</a>
+      <a href="JobListing.html" class="mr-5 hover:text-gray-900">Job Listings</a>
+      <a class="mr-5 hover:text-gray-900">Profile</a>
+    </nav>
+    <button class="inline-flex items-center bg-blue-700 border-0 py-1 px-3 focus:outline-none hover:bg-indigo-800 rounded text-base mt-4 md:mt-0" id="logoutBtn">Log Out
+      
+    </button>
+  </div>
+</header>
+<section>
+    <div>
+        <h1 style="text-align: center; font-size: xx-large; color: cornflowerblue;" id="greet"></h1>
+        <h2 style="font-size: x-large; padding: 1rem;">Applied Jobs🗃️ Appear Here</h2>
+        <p style="font-size: large;">Here’s what’s happening in your account today.</p>
+
+    </div>
+    <div id="viewed-jobs" class="mt-6">
+
+    </div>
+</section>
+<script src="script.js"></script>
+</body>
+</html>

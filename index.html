@@ -176,11 +176,11 @@
 
     }
     .createuser{
-      display: ;
       margin: auto;
       padding: 20px;
       width: 500px;
       background-color: lightskyblue;
+      justify-items: center;
     }
   </style>
   </head>
@@ -230,14 +230,14 @@
 
     <div class="signup">
       <h2>New User? Sign Up</h2>
-      <a href="EmployerLogin.html">Create Account</a>
+      <button id="showSignup">Create Account</button>
     </div>
   </div>
 </section>
 
-<section class="createuser">
+<section class="createuser" id="signupSection" style="display: none;">
   <div id="signup">
-    <h1><b>Create User Account</b></h1>
+    <h1 style="text-align: center;padding: 1rem; font-size: larger;"><b>Create User Account</b></h1>
     <form action="" method="post">
       <div>
         <label for="fullname">Full Name</label>
