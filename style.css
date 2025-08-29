@@ -23,3 +23,12 @@
       border: 1px solid black;
       color: white;
     }
+    #viewed-jobs{
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      padding: 1rem;
+      margin: 1%;
+      justify-content: center;
+      align-items: center;
+    }
