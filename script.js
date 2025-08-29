@@ -12,6 +12,10 @@ class JobListing {
     this.logoutBtn = document.getElementById("logoutBtn");
     this.applied = document.getElementById('applied')
     this.viewedJobs= document.getElementById('viewed-jobs')
+    this.employerSignupBtn = document.getElementById('employerSignupBtn');
+    this.employerLoginBtn = document.getElementById('employerLoginBtn');
+    this.submitJobBtn = document.getElementById('submitJobBtn');
+    this.postJobSection = document.getElementById('postJobSection');
 
     
     this.signUp = this.signUp.bind(this);
@@ -37,6 +41,15 @@ class JobListing {
       this.showSignupBtn.addEventListener("click", () => {
         this.toggleSignup();
       });
+    }
+    if (this.employerSignupBtn) {
+      this.employerSignupBtn.addEventListener('click', this.employerSignUp.bind(this));
+    }
+    if (this.employerLoginBtn) {
+      this.employerLoginBtn.addEventListener('click', this.employerLogin.bind(this));
+    }
+    if (this.submitJobBtn) {
+      this.submitJobBtn.addEventListener('click', this.postJob.bind(this));
     }
 
     window.addEventListener('click', (event) => {
@@ -125,6 +138,47 @@ class JobListing {
       this.modal.style.display = 'block';
     }
   }
+  employerSignUp() {
+  const username = document.getElementById('employerUsername').value;
+  const password = document.getElementById('employerPassword').value;
+  
+  if (username && password) {
+    localStorage.setItem(`employer_${username}`, password);
+    alert('Employer registered successfully.');
+  } else {
+    alert('Please fill out all fields.');
+  }
+}
+  employerLogin() {
+  const username = document.getElementById('employerLoginUser').value;
+  const password = document.getElementById('employerLoginPass').value;
+
+  const storedPassword = localStorage.getItem(`employer_${username}`);
+  
+  if (storedPassword === password) {
+    alert(`Welcome, ${username}`);
+    this.postJobSection.style.display = 'block';
+    localStorage.setItem('activeEmployer', username);
+  } else {
+    alert('Invalid employer credentials.');
+  }
+}
+  postJob() {
+  const job = {
+    title: document.getElementById('jobTitle').value,
+    company: document.getElementById('companyName').value,
+    location: document.getElementById('location').value,
+    redirect_url: document.getElementById('redirectUrl').value
+  };
+
+  const postedJobs = JSON.parse(localStorage.getItem('postedJobs')) || [];
+  postedJobs.push(job);
+  localStorage.setItem('postedJobs', JSON.stringify(postedJobs));
+
+  alert('Job posted successfully!');
+}
+
+
   saveViewedJobs(job) {
   const viewedJobs = JSON.parse(localStorage.getItem('viewedJobs')) || [];
 
