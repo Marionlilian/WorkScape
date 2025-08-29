@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Employer Dashboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen">
+
+ 
+  <header
+      class="bg-gradient-to-r from-indigo-700 to-blue-600 text-white shadow-lg"
+    >
+      <div
+        class="container mx-auto flex flex-wrap items-center justify-between px-5 py-4"
+      >
+        <a href="index.html" class="flex items-center space-x-2">
+          <img
+            src="Images/WorkScape logo1.png"
+            alt="WorkScape Logo"
+            class="h-8 w-auto"
+          />
+          <span class="text-xl font-bold tracking-wide">WorkScape</span>
+        </a>
+
+        <nav class="flex flex-wrap items-center gap-x-6 text-base">
+          <a href="index.html" class="hover:text-gray-200 transition">Home</a>
+          <a href="EmployerDashboard.html" class="hover:text-gray-200 transition"
+            >Dashboard</a
+          >
+          <a href="EmployerProfile.html" class="hover:text-gray-200 transition">Profile</a>
+        </nav>
+
+        <button
+          id="logoutBtn"
+          class="bg-white text-blue-700 font-medium py-2 px-4 rounded hover:bg-gray-100 transition mt-4 md:mt-0"
+        >
+          Log Out
+        </button>
+      </div>
+    </header>
+
+
+  <section class="bg-indigo-600 text-white py-16">
+    <div class="container mx-auto text-center">
+      <h2 class="text-4xl font-bold mb-4">Welcome, <span id="employerName">Employer</span>!</h2>
+      <p class="text-xl">Post your job openings and connect with top talent today.</p>
+    </div>
+  </section>
+
+  
+<section id="employerDashboard" class="p-6">
+  <div class="mb-6">
+    <h2 class="text-2xl font-bold mb-2">Posted Jobs</h2>
+    <div id="postedJobsList" class="space-y-4"></div>
+  </div>
+</section>
+
+
+
+  <section class="container mx-auto mt-12 px-6">
+    <div class="bg-white p-8 rounded-lg shadow-lg">
+      <h3 class="text-2xl font-semibold mb-6 text-gray-800">Post a Job</h3>
+      <form id="jobForm" class="space-y-6">
+        <input type="text" id="jobTitle" placeholder="Job Title" required
+          class="w-full border border-gray-300 p-3 rounded focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+
+        <input type="text" id="location" placeholder="Job Location" required
+          class="w-full border border-gray-300 p-3 rounded focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+
+        <textarea id="jobDescription" placeholder="Job Description" required
+          class="w-full border border-gray-300 p-3 rounded focus:outline-none focus:ring-2 focus:ring-indigo-500 h-32"></textarea>
+
+        <input type="url" id="redirectUrl" placeholder="Application Link (URL)" required
+          class="w-full border border-gray-300 p-3 rounded focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+
+        <button type="submit" id="submitJobBtn"
+          class="bg-indigo-600 text-white px-6 py-3 rounded hover:bg-indigo-700 transition">Post Job</button>
+      </form>
+    </div>
+  </section>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+  const employer = localStorage.getItem('activeEmployer');
+  const jobsContainer = document.getElementById('postedJobsList');
+
+  if (employer) {
+    document.getElementById('employerName').textContent = employer;
+  }
+
+  function displayPostedJobs() {
+    const jobs = JSON.parse(localStorage.getItem('postedJobs')) || [];
+    if (!jobsContainer) return;
+
+    jobsContainer.innerHTML = '';
+
+    if (jobs.length === 0) {
+      jobsContainer.innerHTML = '<p class="text-gray-500">No jobs posted yet.</p>';
+      return;
+    }
+
+    jobs.forEach((job) => {
+      const card = document.createElement('div');
+      card.className = 'bg-gray-100 p-4 rounded shadow';
+
+      card.innerHTML = `
+        <h4 class="font-bold text-lg">${job.title}</h4>
+        <p class="text-sm">${job.location}</p>
+        <p class="text-sm mt-1">${job.description}</p>
+        <a href="${job.redirect_url}" target="_blank" class="text-blue-600 hover:underline mt-2 inline-block">Apply</a>
+      `;
+
+      jobsContainer.appendChild(card);
+    });
+  }
+
+  displayPostedJobs();
+
+  const jobForm = document.getElementById('jobForm');
+  if (jobForm) {
+    jobForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      const job = {
+        title: document.getElementById('jobTitle').value.trim(),
+        location: document.getElementById('location').value.trim(),
+        description: document.getElementById('jobDescription').value.trim(),
+        redirect_url: document.getElementById('redirectUrl').value.trim(),
+      };
+
+      if (!job.title || !job.location || !job.description || !job.redirect_url) {
+        alert('Please fill in all fields.');
+        return;
+      }
+
+      const jobs = JSON.parse(localStorage.getItem('postedJobs')) || [];
+      jobs.unshift(job); // Add new job at top
+      localStorage.setItem('postedJobs', JSON.stringify(jobs));
+
+      alert('Job posted successfully!');
+      jobForm.reset();
+      displayPostedJobs();
+    });
+  }
+
+  document.getElementById('logoutBtn')?.addEventListener('click', () => {
+    localStorage.removeItem('activeEmployer');
+    window.location.href = 'index.html';
+  });
+});
+
+   
+  </script>
+
+</body>
+</html>

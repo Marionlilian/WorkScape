@@ -2,42 +2,63 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Test</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Employer Login Modal</title>
+  <script defer src="script.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-  <button id="browsebtn">Browse Jobs</button>
+<body class="bg-gray-100">
 
-  <div id="modal" style="display: none; background: rgba(0,0,0,0.5); position: fixed; top: 0; left: 0; width: 100%; height: 100%;">
-    <div style="margin: 50px auto; background: white; padding: 20px; width: 300px;">
-      <p>Login Modal</p>
-    </div>
+  <!-- ✅ Post a Job Button -->
+  <div class="p-6">
+    <button id="postJobsBtn"
+      class="bg-blue-700 text-white px-4 py-2 rounded hover:bg-blue-800">
+      Post a Job
+    </button>
   </div>
 
+  <!-- ✅ Employer Login Modal -->
+  <div id="employerLoginModal"
+    class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+    <div class="bg-white rounded-lg shadow-lg w-full max-w-md p-8">
+      <h2 class="text-2xl font-semibold text-center text-gray-800 mb-6">
+        Employer Login
+      </h2>
+
+      <input type="text" id="employerLoginUser" placeholder="Username"
+        class="mb-4 w-full px-4 py-2 border border-gray-300 rounded" />
+
+      <input type="password" id="employerLoginPass" placeholder="Password"
+        class="mb-6 w-full px-4 py-2 border border-gray-300 rounded" />
+
+      <button id="employerLoginBtn"
+        class="w-full bg-indigo-600 text-white py-2 rounded hover:bg-indigo-700">
+        Log In
+      </button>
+
+      <p class="mt-4 text-center text-sm text-gray-600">
+        Don’t have an account?
+        <a href="#" id="showEmployerSignup"
+          class="text-indigo-600 hover:underline font-medium">Sign up here</a>
+      </p>
+    </div>
+  </div>
   <script>
-    class JobListing {
-      constructor() {
-        this.modal = document.getElementById('modal');
-        this.browseBtn = document.getElementById('browsebtn');
+    document.addEventListener("DOMContentLoaded", () => {
+  const postJobsBtn = document.getElementById("postJobsBtn");
+  const employerLoginModal = document.getElementById("employerLoginModal");
 
-        console.log("browseBtn is", this.browseBtn); // Debug
-
-        this.browseJobs = this.browseJobs.bind(this);
-
-        if (this.browseBtn) {
-          this.browseBtn.addEventListener('click', this.browseJobs);
-        }
-      }
-
-      browseJobs(event) {
-        event.preventDefault();
-        console.log("Browse button clicked");
-        this.modal.style.display = 'block';
-      }
-    }
-
-    document.addEventListener('DOMContentLoaded', () => {
-      new JobListing();
+  if (postJobsBtn) {
+    postJobsBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      console.log("✅ Post Jobs button clicked"); // DEBUG
+      employerLoginModal.classList.remove("hidden");
     });
+  } else {
+    console.error("❌ postJobsBtn not found in DOM");
+  }
+});
+
   </script>
 </body>
 </html>

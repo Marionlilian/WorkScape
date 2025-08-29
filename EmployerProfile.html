@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Employer Profile</title>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const profileData = JSON.parse(localStorage.getItem("employer_profile"));
+
+      if (!profileData) {
+        document.getElementById("profileInfo").innerHTML = "<p class='text-red-500'>No profile data found.</p>";
+        return;
+      }
+
+      document.getElementById("profileInfo").innerHTML = `
+        <h2 class="text-xl font-bold mb-4">Company Profile</h2>
+        <p><strong>Company Name:</strong> ${profileData.companyName}</p>
+        <p><strong>Address:</strong> ${profileData.companyAddress}</p>
+        <p><strong>Position:</strong> ${profileData.position}</p>
+        <p><strong>Email:</strong> ${profileData.email}</p>
+      `;
+    });
+  </script>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 p-8">
+  <header
+      class="bg-gradient-to-r from-indigo-700 to-blue-600 text-white shadow-lg"
+    >
+      <div
+        class="container mx-auto flex flex-wrap items-center justify-between px-5 py-4"
+      >
+        <a href="index.html" class="flex items-center space-x-2">
+          <img
+            src="Images/WorkScape logo1.png"
+            alt="WorkScape Logo"
+            class="h-8 w-auto"
+          />
+          <span class="text-xl font-bold tracking-wide">WorkScape</span>
+        </a>
+
+        <nav class="flex flex-wrap items-center gap-x-6 text-base">
+          <a href="index.html" class="hover:text-gray-200 transition">Home</a>
+          <a href="EmployerDashboard.html" class="hover:text-gray-200 transition"
+            >Dashboard</a
+          >
+          <a href="EmployerProfile.html" class="hover:text-gray-200 transition">Profile</a>
+        </nav>
+
+        <button
+          id="logoutBtn"
+          class="bg-white text-blue-700 font-medium py-2 px-4 rounded hover:bg-gray-100 transition mt-4 md:mt-0"
+        >
+          Log Out
+        </button>
+      </div>
+    </header>
+
+  <div class="max-w-lg mx-auto bg-white p-6 rounded shadow">
+    <div id="profileInfo" class="text-gray-800"></div>
+  </div>
+</body>
+</html>

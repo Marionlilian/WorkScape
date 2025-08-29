@@ -200,10 +200,9 @@
           <a href="" class="bg-yellow-400 text-gray-900 px-6 py-3 rounded-lg font-semibold hover:bg-yellow-300 transition" id="browsebtn">
             Browse Jobs
           </a>
-          
-          <a href="EmployerLogin.html" class="border border-white px-6 py-3 rounded-lg font-semibold hover:bg-white hover:text-indigo-600 transition" id="postbtn">
-            Post a Job
-          </a>
+          <button id="postJobsBtn" class="bg-blue-700 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-800 transition">
+            Post Jobs
+          </button>
         </div>
       </div>
       <div class="image-container w- mx-0 px- text-center py-0">
@@ -270,7 +269,6 @@
     </form>
   </div>
 </section>
-
 
     <section class="bg-white py-20">
       <div class="max-w-7xl mx-auto px-6">
@@ -406,9 +404,137 @@
         © 2025 WorkScape. All rights reserved.
       </div>
     </footer>
+
+    <section id="SigninEmployer">
+    <!-- ✅ Employer Login Modal -->
+  <div id="employerLoginModal"
+    class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+    <div class="bg-white rounded-lg shadow-lg w-full max-w-md p-8">
+      <h2 class="text-2xl font-semibold text-center text-gray-800 mb-6">
+        Employer Login
+      </h2>
+
+      <input type="text" id="employerLoginUser" placeholder="Username"
+        class="mb-4 w-full px-4 py-2 border border-gray-300 rounded" />
+
+      <input type="password" id="employerLoginPass" placeholder="Password"
+        class="mb-6 w-full px-4 py-2 border border-gray-300 rounded" />
+
+      <button id="employerLoginBtn"
+        class="w-full bg-indigo-600 text-white py-2 rounded hover:bg-indigo-700">
+        Log In
+      </button>
+
+      <p class="mt-4 text-center text-sm text-gray-600">
+        Don’t have an account?
+        <a href="#" id="showEmployerSignup"
+          class="text-indigo-600 hover:underline font-medium">Sign up here</a>
+      </p>
+    </div>
+  </div>
+    </section>
+
+    <section id="SignupEmployer">
+      <div id="employerSignupSection" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+  <div class="bg-white rounded-lg shadow-lg w-full max-w-lg p-8">
+    <h2 class="text-2xl font-semibold text-center text-gray-800 mb-6">Employer Registration</h2>
+
+    <input type="text" id="employerUsername" placeholder="Username"
+      class="mb-4 w-full px-4 py-2 border border-gray-300 rounded focus:ring-indigo-500 focus:outline-none" />
+
+    <input type="password" id="employerPassword" placeholder="Password"
+      class="mb-4 w-full px-4 py-2 border border-gray-300 rounded focus:ring-indigo-500 focus:outline-none" />
+
+    <input type="text" id="companyName" placeholder="Company Name"
+      class="mb-4 w-full px-4 py-2 border border-gray-300 rounded focus:ring-indigo-500 focus:outline-none" />
+
+    <input type="text" id="companyAddress" placeholder="Company Address"
+      class="mb-4 w-full px-4 py-2 border border-gray-300 rounded focus:ring-indigo-500 focus:outline-none" />
+
+    <input type="text" id="employerPosition" placeholder="Your Position"
+      class="mb-4 w-full px-4 py-2 border border-gray-300 rounded focus:ring-indigo-500 focus:outline-none" />
+
+    <input type="email" id="employerEmail" placeholder="Email Address"
+      class="mb-6 w-full px-4 py-2 border border-gray-300 rounded focus:ring-indigo-500 focus:outline-none" />
+
+    <button id="employerSignupBtn"
+      class="w-full bg-indigo-600 text-white py-2 rounded hover:bg-indigo-700 transition">Sign Up</button>
+
+    <p class="mt-4 text-center text-sm text-gray-600">
+      Already have an account?
+      <a href="#" id="showEmployerLogin" class="text-indigo-600 hover:underline font-medium">Log in here</a>
+    </p>
+  </div>
+</div>
+
+    </section>
     <script src="script.js"></script>
-    <script>
-      
-    </script>
+   <script>
+  document.addEventListener("DOMContentLoaded", () => {
+  const postJobsBtn = document.getElementById("postJobsBtn");
+  const employerLoginModal = document.getElementById("employerLoginModal");
+  const employerSignupSection = document.getElementById("employerSignupSection");
+
+ document.addEventListener("DOMContentLoaded", () => {
+  const postJobsBtn = document.getElementById("postJobsBtn");
+  const employerLoginModal = document.getElementById("employerLoginModal");
+
+  if (postJobsBtn) {
+    postJobsBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      console.log("✅ Post Jobs button clicked"); // DEBUG
+      employerLoginModal.classList.remove("hidden");
+    });
+  } else {
+    console.error("❌ postJobsBtn not found in DOM");
+  }
+});
+  
+  document.getElementById("employerSignupBtn")?.addEventListener("click", () => {
+    const username = document.getElementById("employerUsername").value.trim();
+    const password = document.getElementById("employerPassword").value;
+    const companyName = document.getElementById("companyName").value.trim();
+    const companyAddress = document.getElementById("companyAddress").value.trim();
+    const position = document.getElementById("employerPosition").value.trim();
+    const email = document.getElementById("employerEmail").value.trim();
+
+    if (!username || !password || !companyName || !companyAddress || !position || !email) {
+      alert("Please fill in all fields.");
+      return;
+    }
+
+    localStorage.setItem("employer_username", username);
+    localStorage.setItem("employer_password", password);
+    localStorage.setItem("employer_profile", JSON.stringify({
+      companyName,
+      companyAddress,
+      position,
+      email
+    }));
+
+    alert("Registration successful! You can now log in.");
+    employerSignupSection?.classList.add("hidden");
+    employerLoginModal?.classList.remove("hidden");
+  });
+
+  
+  document.getElementById("employerLoginBtn")?.addEventListener("click", () => {
+    const username = document.getElementById("employerLoginUser").value.trim();
+    const password = document.getElementById("employerLoginPass").value;
+
+    const storedUsername = localStorage.getItem("employer_username");
+    const storedPassword = localStorage.getItem("employer_password");
+
+    if (username === storedUsername && password === storedPassword) {
+      alert(`Welcome back, ${storedUsername}!`);
+      window.location.href = "EmployerDashboard.html";
+    } else {
+      alert("Invalid login credentials.");
+    }
+  });
+});
+
+   </script>
+  
   </body>
 </html>

@@ -10,38 +10,40 @@ class JobListing {
     this.jobsElement = document.getElementById('jobs');
     this.welcomeContainer = document.getElementById("greet");
     this.logoutBtn = document.getElementById("logoutBtn");
-    this.applied = document.getElementById('applied')
-    this.viewedJobs= document.getElementById('viewed-jobs')
+    this.applied = document.getElementById('applied');
+    this.viewedJobs = document.getElementById('viewed-jobs');
+
     this.employerSignupBtn = document.getElementById('employerSignupBtn');
     this.employerLoginBtn = document.getElementById('employerLoginBtn');
     this.submitJobBtn = document.getElementById('submitJobBtn');
     this.postJobSection = document.getElementById('postJobSection');
+    this.postJobsBtn = document.getElementById("postJobsBtn");
+    this.employerLoginModal = document.getElementById("employerLoginModal");
+    this.employerSignupSection = document.getElementById("employerSignupSection");
+    this.showEmployerSignup = document.getElementById("showEmployerSignup");
+    this.showEmployerLogin = document.getElementById("showEmployerLogin");
 
-    
     this.signUp = this.signUp.bind(this);
     this.browseJobs = this.browseJobs.bind(this);
-    // this.postJobs = this.postJobs.bind(this);
     this.loginUser = this.loginUser.bind(this);
     this.fetchJobs = this.fetchJobs.bind(this);
-    this.saveViewedJobs =this.saveViewedJobs.bind(this);
-    // this.displayViewedJobs = this.displayViewedJobs.bind(this);
+    this.saveViewedJobs = this.saveViewedJobs.bind(this);
 
-    if (this.signupBtn) {
-      this.signupBtn.addEventListener('click', this.signUp);
-    }
-    if (this.browseBtn) {
-          this.browseBtn.addEventListener('click', this.browseJobs);
-        }
+    this.addEventListeners();
 
-    if (this.loginBtn) {
-      this.loginBtn.addEventListener('click', this.loginUser);
-    }
+    localStorage.setItem('username', 'admin');
+    localStorage.setItem('password', '1234');
+  }
+
+  addEventListeners() {
+    if (this.signupBtn) this.signupBtn.addEventListener('click', this.signUp);
+    if (this.browseBtn) this.browseBtn.addEventListener('click', this.browseJobs);
+    if (this.loginBtn) this.loginBtn.addEventListener('click', this.loginUser);
 
     if (this.showSignupBtn && this.signupSection && this.modal) {
-      this.showSignupBtn.addEventListener("click", () => {
-        this.toggleSignup();
-      });
+      this.showSignupBtn.addEventListener("click", () => this.toggleSignup());
     }
+
     if (this.employerSignupBtn) {
       this.employerSignupBtn.addEventListener('click', this.employerSignUp.bind(this));
     }
@@ -52,70 +54,87 @@ class JobListing {
       this.submitJobBtn.addEventListener('click', this.postJob.bind(this));
     }
 
+    if (this.postJobsBtn && this.employerLoginModal) {
+      this.postJobsBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+        this.employerSignupSection?.classList.add("hidden");
+        this.employerLoginModal?.classList.remove("hidden");
+      });
+    }
+
+    if (this.showEmployerSignup) {
+      this.showEmployerSignup.addEventListener("click", (e) => {
+        e.preventDefault();
+        this.employerLoginModal.classList.add("hidden");
+        this.employerSignupSection.classList.remove("hidden");
+      });
+    }
+
+    if (this.showEmployerLogin) {
+      this.showEmployerLogin.addEventListener("click", (e) => {
+        e.preventDefault();
+        this.employerSignupSection.classList.add("hidden");
+        this.employerLoginModal.classList.remove("hidden");
+      });
+    }
+
+    if (this.logoutBtn) {
+      this.logoutBtn.addEventListener("click", this.logout.bind(this));
+    }
+
     window.addEventListener('click', (event) => {
       if (event.target === this.modal) {
         this.modal.style.display = 'none';
       }
     });
-
-   
-    localStorage.setItem('username', 'admin');
-    localStorage.setItem('password', '1234');
   }
 
   init() {
-  this.fetchJobs();
+    this.fetchJobs();
 
-  const storedUsername = localStorage.getItem("username");
-
-  if (this.welcomeContainer) {
-    if (storedUsername) {
-      this.welcomeContainer.innerHTML = `<p class="text-xl font-semibold">Welcome ${storedUsername}!</p>`;
-    } else {
-      this.welcomeContainer.innerHTML = `<p class="text-red-500">No user found. Please log in.</p>`;
+    const storedUsername = localStorage.getItem("username");
+    if (this.welcomeContainer) {
+      if (storedUsername) {
+        this.welcomeContainer.innerHTML = `<p class="text-xl font-semibold">Welcome ${storedUsername}!</p>`;
+      } else {
+        this.welcomeContainer.innerHTML = `<p class="text-red-500">No user found. Please log in.</p>`;
+      }
     }
   }
-  if (this.logoutBtn) {
-  console.log("Attaching logout event"); 
-  this.logoutBtn.addEventListener("click", this.logout.bind(this));
-}
 
-  }
   logout() {
-  console.log('Logging out...');
-  localStorage.removeItem('username');
-  localStorage.removeItem('password');
+    localStorage.removeItem('username');
+    localStorage.removeItem('password');
+    localStorage.removeItem('activeEmployer');
+    window.location.href = 'index.html';
+  }
 
-  window.location.href = 'index.html';
-}
   browseJobs(event) {
-  event.preventDefault();
-  console.log("Browse Jobs clicked!");
-  this.modal.style.display = 'block';
-}
+    event.preventDefault();
+    this.modal.style.display = 'block';
+  }
 
   loginUser(event) {
-  event.preventDefault();
+    event.preventDefault();
+    const inputUsername = document.getElementById('UserName')?.value.trim();
+    const inputPassword = document.getElementById('password')?.value;
 
-  const inputUsername = document.getElementById('UserName')?.value.trim();
-  const inputPassword = document.getElementById('password')?.value;
+    const storedUsername = localStorage.getItem('username');
+    const storedPassword = localStorage.getItem('password');
 
-  const storedUsername = localStorage.getItem('username');
-  const storedPassword = localStorage.getItem('password');
+    if (!inputUsername || !inputPassword) {
+      alert('Please enter both username and password.');
+      return;
+    }
 
-  if (!inputUsername || !inputPassword) {
-    alert('Please enter both username and password.');
-    return;
+    if (inputUsername === storedUsername && inputPassword === storedPassword) {
+      alert(`Welcome ${storedUsername}!`);
+      this.modal.style.display = 'none';
+      window.location.href = "Dashboard.html";
+    } else {
+      alert('Invalid credentials. Please sign up.');
+    }
   }
-
-  if (inputUsername === storedUsername && inputPassword === storedPassword) {
-    alert(`Welcome ${storedUsername}!`);
-    this.modal.style.display = 'none';
-    window.location.href = "Dashboard.html";
-  } else {
-    alert('Invalid credentials. Please sign up.');
-  }
-}
 
   toggleSignup() {
     this.signupSection.style.display = "block";
@@ -126,10 +145,15 @@ class JobListing {
     event.preventDefault();
     const newUsername = document.getElementById('newusername').value;
     const newPassword = document.getElementById('newpassword').value;
-    const storedUsername = localStorage.getItem('username');
 
-    if (newUsername === storedUsername) {
-      alert('You already have an account. Please log in.');
+    if (!newUsername || !newPassword) {
+      alert('Please enter all fields.');
+      return;
+    }
+
+    const existingUser = localStorage.getItem('username');
+    if (newUsername === existingUser) {
+      alert('You already have an account.');
     } else {
       localStorage.setItem('username', newUsername);
       localStorage.setItem('password', newPassword);
@@ -138,172 +162,147 @@ class JobListing {
       this.modal.style.display = 'block';
     }
   }
+
   employerSignUp() {
-  const username = document.getElementById('employerUsername').value;
-  const password = document.getElementById('employerPassword').value;
-  
-  if (username && password) {
+    const username = document.getElementById('employerUsername').value;
+    const password = document.getElementById('employerPassword').value;
+    const companyName = document.getElementById('companyName').value;
+    const companyAddress = document.getElementById('companyAddress').value;
+    const position = document.getElementById('employerPosition').value;
+    const email = document.getElementById('employerEmail').value;
+
+    if (!username || !password || !companyName || !companyAddress || !position || !email) {
+      alert('Please fill out all fields.');
+      return;
+    }
+
     localStorage.setItem(`employer_${username}`, password);
-    alert('Employer registered successfully.');
-  } else {
-    alert('Please fill out all fields.');
+    localStorage.setItem(`employer_profile_${username}`, JSON.stringify({
+      companyName,
+      companyAddress,
+      position,
+      email
+    }));
+
+    alert('Registration successful! You can now log in.');
+    this.employerSignupSection?.classList.add("hidden");
+    this.employerLoginModal?.classList.remove("hidden");
   }
-}
+
   employerLogin() {
-  const username = document.getElementById('employerLoginUser').value;
-  const password = document.getElementById('employerLoginPass').value;
+    const username = document.getElementById('employerLoginUser').value;
+    const password = document.getElementById('employerLoginPass').value;
 
-  const storedPassword = localStorage.getItem(`employer_${username}`);
-  
-  if (storedPassword === password) {
-    alert(`Welcome, ${username}`);
-    this.postJobSection.style.display = 'block';
-    localStorage.setItem('activeEmployer', username);
-  } else {
-    alert('Invalid employer credentials.');
-  }
-}
-  postJob() {
-  const job = {
-    title: document.getElementById('jobTitle').value,
-    company: document.getElementById('companyName').value,
-    location: document.getElementById('location').value,
-    redirect_url: document.getElementById('redirectUrl').value
-  };
+    const storedPassword = localStorage.getItem(`employer_${username}`);
 
-  const postedJobs = JSON.parse(localStorage.getItem('postedJobs')) || [];
-  postedJobs.push(job);
-  localStorage.setItem('postedJobs', JSON.stringify(postedJobs));
-
-  alert('Job posted successfully!');
-}
-
-
-  saveViewedJobs(job) {
-  const viewedJobs = JSON.parse(localStorage.getItem('viewedJobs')) || [];
-
-  const alreadyViewedJob = viewedJobs.find(j => j.id === job.id);
-
-  if (!alreadyViewedJob) {
-    viewedJobs.push({
-      id: job.id || `${job.title} - ${job.company.display_name}`,
-      title: job.title,
-      company: job.company.display_name,
-      location: job.location.display_name,
-      url: job.redirect_url
-    });
-
-    localStorage.setItem('viewedJobs', JSON.stringify(viewedJobs));
+    if (storedPassword === password) {
+      alert(`Welcome, ${username}`);
+      localStorage.setItem('activeEmployer', username);
+      window.location.href = 'EmployerDashboard.html';
+    } else {
+      alert('Invalid employer credentials.');
+    }
   }
 
-  window.open(job.redirect_url, '_blank');
+  postJob(event) {
+    event.preventDefault();
 
-}
+    const job = {
+      title: document.getElementById('jobTitle').value,
+      location: document.getElementById('location').value,
+      description: document.getElementById('jobDescription')?.value || "No description provided",
+      redirect_url: document.getElementById('redirectUrl').value,
+      company: localStorage.getItem('activeEmployer') || "Unknown Company"
+    };
 
-  filterJobs() {
+    const jobs = JSON.parse(localStorage.getItem('postedJobs')) || [];
+    jobs.unshift(job); // Add new job to the top
+    localStorage.setItem('postedJobs', JSON.stringify(jobs));
 
-    console.log('Filtering jobs...');
+    alert('Job posted successfully!');
+    document.getElementById('jobForm')?.reset();
   }
 
   async fetchJobs() {
-  const appId = '54aa27d4';
-  const appKey = '9889b9d4c1512fac9bfaeeab5c9dc4fc';
-  const url = `https://api.adzuna.com/v1/api/jobs/gb/search/1?app_id=${appId}&app_key=${appKey}&results_per_page=15&what=remote`;
-
-  try {
-    const response = await fetch(url);
-
-    if (!response.ok) {
-      throw new Error(`API error: ${response.status}`);
+    const apiJobs = [];
+    try {
+      const res = await fetch(`https://api.adzuna.com/v1/api/jobs/gb/search/1?app_id=54aa27d4&app_key=9889b9d4c1512fac9bfaeeab5c9dc4fc&results_per_page=10&what=remote`);
+      const data = await res.json();
+      apiJobs.push(...(data.results || []));
+    } catch (error) {
+      console.error("API error:", error);
     }
 
-    const data = await response.json();
-    const jobs = data.results || [];
+    const customJobs = JSON.parse(localStorage.getItem('postedJobs')) || [];
 
-    console.log('Full API response:', data);
+    const allJobs = [...customJobs, ...apiJobs];
 
     if (this.jobsElement) {
       this.jobsElement.innerHTML = '';
 
-      if (jobs.length === 0) {
+      if (allJobs.length === 0) {
         this.jobsElement.innerHTML = '<p>No jobs found.</p>';
         return;
       }
 
-      jobs.forEach(job => {
+      allJobs.forEach(job => {
         const jobCard = document.createElement('div');
-        jobCard.className = 'job-card bg-blue-50 p-4 rounded shadow mb-4 rounded-lg shadow hover:shadow-md transition-shadow duration-200';
+        jobCard.className = 'job-card bg-blue-50 p-4 rounded shadow mb-4';
         jobCard.innerHTML = `
           <h3 class="text-lg font-semibold">${job.title}</h3>
-          <p class="text-sm text-gray-600">${job.company.display_name || 'Unknown Company'}</p>
-          <p class="text-sm">${job.location.display_name || 'Remote / Unknown'}</p>
+          <p class="text-sm text-gray-600">${job.company || 'Unknown Company'}</p>
+          <p class="text-sm">${job.location || 'Unknown Location'}</p>
         `;
+
         const viewBtn = document.createElement('button');
         viewBtn.className = "mt-4 bg-blue-900 hover:bg-blue-200 text-white font-semibold py-2 px-4 rounded";
-        viewBtn.textContent = 'View Job'
+        viewBtn.textContent = 'View Job';
         viewBtn.addEventListener('click', () => this.saveViewedJobs(job));
+        jobCard.appendChild(viewBtn);
 
-jobCard.appendChild(viewBtn);
-this.jobsElement.appendChild(jobCard);
-
+        this.jobsElement.appendChild(jobCard);
       });
     }
-  } catch (error) {
-    console.error('Error fetching jobs:', error);
-    if (this.jobsElement) {
-      this.jobsElement.innerHTML = `<p class="text-red-500">Failed to load jobs. Try again later.</p>`;
+  }
+
+  saveViewedJobs(job) {
+    const viewedJobs = JSON.parse(localStorage.getItem('viewedJobs')) || [];
+    const alreadyViewed = viewedJobs.find(j => j.title === job.title && j.company === job.company);
+
+    if (!alreadyViewed) {
+      viewedJobs.push({
+        title: job.title,
+        company: job.company,
+        location: job.location,
+        url: job.redirect_url
+      });
+      localStorage.setItem('viewedJobs', JSON.stringify(viewedJobs));
     }
-  }
-}
-displayViewedJobs() {
-  const jobData = JSON.parse(localStorage.getItem('viewedJobs')) || [];
-  const viewedContainer = document.getElementById('viewed-jobs');
 
-  if (!viewedContainer) {
-    console.error('Viewed jobs container not found');
-    return;
+    window.open(job.redirect_url, '_blank');
   }
 
-  viewedContainer.innerHTML = '';
+  displayViewedJobs() {
+    const jobs = JSON.parse(localStorage.getItem('viewedJobs')) || [];
+    const container = document.getElementById('viewed-jobs');
+    if (!container) return;
 
-  if (jobData.length === 0) {
-    viewedContainer.innerHTML = '<p>No viewed jobs found.</p>';
-    return;
+    container.innerHTML = jobs.length === 0 ? '<p>No viewed jobs yet.</p>' : '';
+
+    jobs.forEach(job => {
+      const card = document.createElement('div');
+      card.className = 'bg-gray-100 p-4 rounded mb-3 shadow';
+      card.innerHTML = `
+        <h3 class="text-lg font-semibold">${job.title}</h3>
+        <p class="text-sm text-gray-600">${job.company}</p>
+        <p class="text-sm">${job.location}</p>
+        <a href="${job.url}" target="_blank" class="inline-block mt-2 px-4 py-2 text-white bg-blue-600 rounded hover:bg-blue-700">View Job</a>
+      `;
+      container.appendChild(card);
+    });
   }
-
-  jobData.forEach((job) => {
-    const jobCard = document.createElement('div');
-    jobCard.className = 'viewedjob-card bg-gray-100 p-4 rounded mb-3 shadow';
-
-    const title = document.createElement('h3');
-    title.className = 'text-lg font-semibold';
-    title.textContent = job.title || 'No Title';
-
-    const company = document.createElement('p');
-    company.className = 'text-sm text-gray-600';
-    company.textContent = job.company?.display_name || 'Unknown Company';
-
-    const location = document.createElement('p');
-    location.className = 'text-sm';
-    location.textContent = job.location?.display_name || 'Remote / Unknown';
-
-    const viewBtn = document.createElement('a');
-    viewBtn.href = job.redirect_url || '#';
-    viewBtn.target = '_blank';
-    viewBtn.textContent = 'View Job';
-    viewBtn.className = 'inline-block mt-2 px-4 py-2 text-white bg-blue-600 rounded hover:bg-blue-700 transition';
-
-    jobCard.appendChild(title);
-    jobCard.appendChild(company);
-    jobCard.appendChild(location);
-    jobCard.appendChild(viewBtn);
-
-    viewedContainer.appendChild(jobCard);
-  });
 }
 
-
-}
 document.addEventListener("DOMContentLoaded", () => {
   const jobListing = new JobListing();
   jobListing.init();
@@ -313,10 +312,27 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   if (document.getElementById('viewed-jobs')) {
-    jobListing.displayViewedJobs(); 
+    jobListing.displayViewedJobs();
+  }
+
+  // Employer Dashboard logic
+  if (document.getElementById("employerName")) {
+    const employer = localStorage.getItem('activeEmployer');
+    if (employer) {
+      document.getElementById('employerName').textContent = employer;
+    }
+
+    const logoutBtn = document.getElementById('logoutBtn');
+    if (logoutBtn) {
+      logoutBtn.addEventListener('click', () => {
+        localStorage.removeItem('activeEmployer');
+        window.location.href = 'index.html';
+      });
+    }
+
+    const jobForm = document.getElementById('jobForm');
+    if (jobForm) {
+      jobForm.addEventListener('submit', (e) => jobListing.postJob(e));
+    }
   }
 });
-
-
-
-
