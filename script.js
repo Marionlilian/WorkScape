@@ -12,6 +12,11 @@ class JobListing {
     this.logoutBtn = document.getElementById("logoutBtn");
     this.applied = document.getElementById('applied');
     this.viewedJobs = document.getElementById('viewed-jobs');
+    this.heroContainer=document.getElementById('hero-container');
+    this.searchby = document.getElementById ('searchby');
+    this.searchQuery = document.getElementById('searchQuery');
+
+
 
     this.employerSignupBtn = document.getElementById('employerSignupBtn');
     this.employerLoginBtn = document.getElementById('employerLoginBtn');
@@ -31,8 +36,8 @@ class JobListing {
 
     this.addEventListeners();
 
-    localStorage.setItem('username', 'admin');
-    localStorage.setItem('password', '1234');
+    // localStorage.setItem('username', 'admin');
+    // localStorage.setItem('password', '1234');
   }
 
   addEventListeners() {
@@ -87,20 +92,40 @@ class JobListing {
         this.modal.style.display = 'none';
       }
     });
+    window.addEventListener('click', (event) => {
+      if (event.target === this.signupSection) {
+        this.signupSection.style.display = 'none';
+      }
+    });
+    const overlay = document.getElementById('overlay');
+if (overlay) {
+  overlay.addEventListener('click', () => {
+    this.modal.style.display = 'none';
+    this.signupSection.style.display= 'none';
+    overlay.style.display = 'none';
+
+    const heroContainer = document.querySelector('.hero-container');
+    if (heroContainer) {
+      heroContainer.style.opacity = '1'; 
+    }
+  });
+}
   }
+
 
   init() {
-    this.fetchJobs();
+  this.fetchJobs();
 
-    const storedUsername = localStorage.getItem("username");
-    if (this.welcomeContainer) {
-      if (storedUsername) {
-        this.welcomeContainer.innerHTML = `<p class="text-xl font-semibold">Welcome ${storedUsername}!</p>`;
-      } else {
-        this.welcomeContainer.innerHTML = `<p class="text-red-500">No user found. Please log in.</p>`;
-      }
+  const activeUser = localStorage.getItem("activeUser");
+  if (this.welcomeContainer) {
+    if (activeUser) {
+      this.welcomeContainer.innerHTML = `<p class="text-2xl text-purple font-semibold">Welcome ${activeUser}!👋</p>`;
+    } else {
+      this.welcomeContainer.innerHTML = `<p class="text-red-500">No user found. Please log in.</p>`;
     }
   }
+}
+
 
   logout() {
     localStorage.removeItem('username');
@@ -112,56 +137,80 @@ class JobListing {
   browseJobs(event) {
     event.preventDefault();
     this.modal.style.display = 'block';
+
+     const overlay = document.getElementById('overlay');
+  if (overlay) {
+    overlay.style.display = 'block';
   }
-
-  loginUser(event) {
-    event.preventDefault();
-    const inputUsername = document.getElementById('UserName')?.value.trim();
-    const inputPassword = document.getElementById('password')?.value;
-
-    const storedUsername = localStorage.getItem('username');
-    const storedPassword = localStorage.getItem('password');
-
-    if (!inputUsername || !inputPassword) {
-      alert('Please enter both username and password.');
-      return;
-    }
-
-    if (inputUsername === storedUsername && inputPassword === storedPassword) {
-      alert(`Welcome ${storedUsername}!`);
-      this.modal.style.display = 'none';
-      window.location.href = "Dashboard.html";
-    } else {
-      alert('Invalid credentials. Please sign up.');
-    }
+     
+   const heroContainer = document.querySelector('.hero-container');
+  if (heroContainer) {
+    heroContainer.style.opacity = '50%';
   }
-
-  toggleSignup() {
-    this.signupSection.style.display = "block";
-    this.modal.style.display = "none";
   }
 
   signUp(event) {
-    event.preventDefault();
-    const newUsername = document.getElementById('newusername').value;
-    const newPassword = document.getElementById('newpassword').value;
+  event.preventDefault();
+  const newUsername = document.getElementById('newusername').value.trim();
+  const newPassword = document.getElementById('newpassword').value;
 
-    if (!newUsername || !newPassword) {
-      alert('Please enter all fields.');
-      return;
-    }
-
-    const existingUser = localStorage.getItem('username');
-    if (newUsername === existingUser) {
-      alert('You already have an account.');
-    } else {
-      localStorage.setItem('username', newUsername);
-      localStorage.setItem('password', newPassword);
-      alert('Registration successful! You can now log in.');
-      this.signupSection.style.display = 'none';
-      this.modal.style.display = 'block';
-    }
+  if (!newUsername || !newPassword) {
+    alert('Please enter all fields.');
+    return;
   }
+
+  const users = JSON.parse(localStorage.getItem('users')) || {};
+
+  if (users[newUsername]) {
+    alert('You already have an account.');
+  } else {
+    
+    users[newUsername] = newPassword;
+    localStorage.setItem('users', JSON.stringify(users));
+
+    alert('Registration successful! You can now log in.');
+    this.signupSection.style.display = 'none';
+    this.modal.style.display = 'block';
+  }
+}
+
+
+   toggleSignup() {
+    this.signupSection.style.display = "block";
+    this.modal.style.display = "none";
+    const overlay = document.getElementById('overlay');
+  if (overlay) {
+    overlay.style.display = 'block';
+  }
+     
+   const heroContainer = document.querySelector('.hero-container');
+  if (heroContainer) {
+    heroContainer.style.opacity = '50%';
+  }
+  }
+
+  loginUser(event) {
+  event.preventDefault();
+  const inputUsername = document.getElementById('UserName')?.value.trim();
+  const inputPassword = document.getElementById('password')?.value;
+
+  if (!inputUsername || !inputPassword) {
+    alert('Please enter both username and password.');
+    return;
+  }
+
+  const users = JSON.parse(localStorage.getItem('users')) || {};
+
+  if (users[inputUsername] === inputPassword) {
+    alert(`Welcome ${inputUsername}!`);
+    localStorage.setItem('activeUser', inputUsername); 
+    this.modal.style.display = 'none';
+    window.location.href = "Dashboard.html";
+  } else {
+    alert('Invalid credentials. Please sign up.');
+  }
+}
+
 
   employerSignUp() {
     const username = document.getElementById('employerUsername').value;
@@ -184,7 +233,7 @@ class JobListing {
       email
     }));
 
-    alert('Registration successful! You can now log in.');
+    // alert('Registration successful! You can now log in.');
     this.employerSignupSection?.classList.add("hidden");
     this.employerLoginModal?.classList.remove("hidden");
   }
@@ -216,7 +265,7 @@ class JobListing {
     };
 
     const jobs = JSON.parse(localStorage.getItem('postedJobs')) || [];
-    jobs.unshift(job); // Add new job to the top
+    jobs.unshift(job); 
     localStorage.setItem('postedJobs', JSON.stringify(jobs));
 
     alert('Job posted successfully!');
@@ -315,7 +364,7 @@ document.addEventListener("DOMContentLoaded", () => {
     jobListing.displayViewedJobs();
   }
 
-  // Employer Dashboard logic
+ 
   if (document.getElementById("employerName")) {
     const employer = localStorage.getItem('activeEmployer');
     if (employer) {

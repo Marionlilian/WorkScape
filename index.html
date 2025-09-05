@@ -6,318 +6,398 @@
     <title>Homepage</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-      
+      .modal {
+        display: none;
+        position: fixed;
+        top: 0%;
+        left: 40%;
+        justify-content: center;
+        align-items: center;
+        padding: 3rem 1rem;
+        background-color: #f3f4f6;
+        width: 100%;
+        max-width: 450px;
+        margin: auto;
+        z-index: 50;
+      }
 
-   .modal {
-  display: none;
-  position: fixed;
-  top: 0;
-  left: 0;
-  justify-content: center;
-  align-items: center;
-  padding: 3rem 1rem;
-  background-color: #f3f4f6; /* Tailwind's bg-gray-100 */
-  width: 100%;
-  max-width: 450px;
-  margin: auto;
-}
+      @media (min-width: 768px) {
+        .modal {
+          padding: 6rem 0;
+        }
+      }
 
-@media (min-width: 768px) {
-  .modal {
-    padding: 6rem 0;
-  }
-}
+      .container {
+        background: #fff;
+        padding: 2rem 2.5rem;
+        border-radius: 12px;
+        box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.15);
+        width: 100%;
+        max-width: 400px;
+        text-align: center;
+      }
 
+      h1 {
+        margin-bottom: 1.5rem;
+        font-size: 1.8rem;
+        color: #333;
+      }
 
-    .container {
-      background: #fff;
-      padding: 2rem 2.5rem;
-      border-radius: 12px;
-      box-shadow: 0px 8px 20px rgba(0,0,0,0.15);
-      width: 100%;
-      max-width: 400px;
-      text-align: center;
-      
-    }
+      form {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+      }
 
-    h1 {
-      margin-bottom: 1.5rem;
-      font-size: 1.8rem;
-      color: #333;
-    }
+      label {
+        text-align: left;
+        font-weight: 600;
+        font-size: 0.9rem;
+        color: #444;
+      }
 
-    form {
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-    }
+      input {
+        padding: 1rem !important;
+        border-radius: 6px;
+        border: 1px solid #ccc;
+        outline: none;
+        font-size: 1rem;
+        transition: border 0.3s ease;
+      }
 
-    label {
-      text-align: left;
-      font-weight: 600;
-      font-size: 0.9rem;
-      color: #444;
-    }
+      input:focus {
+        border-color: #4f46e5;
+        box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.2);
+      }
 
-    input {
-      padding: 1rem !important;
-      border-radius: 6px;
-      border: 1px solid #ccc;
-      outline: none;
-      font-size: 1rem;
-      transition: border 0.3s ease;
-    }
+      .btn {
+        background: #4f46e5;
+        color: #fff;
+        font-weight: bold;
+        padding: 0.75rem;
+        display: inline-block;
+        width: auto;
+        border-radius: 6px;
+        border: none;
+        cursor: pointer;
+        transition: background 0.3s ease, transform 0.2s;
+      }
 
-    input:focus {
-      border-color: #4f46e5;
-      box-shadow: 0 0 0 2px rgba(79,70,229,0.2);
-    }
+      .btn:hover {
+        background: #4338ca;
+        transform: translateY(-2px);
+      }
 
-    .btn {
-      background: #4f46e5;
-      color: #fff;
-      font-weight: bold;
-      padding: 0.75rem;
-      display: inline-block;
-      width: auto;
-      border-radius: 6px;
-      border: none;
-      cursor: pointer;
-      transition: background 0.3s ease, transform 0.2s;
-    }
+      .signup {
+        margin-top: 0;
+        z-index: 60;
+      }
 
-    .btn:hover {
-      background: #4338ca;
-      transform: translateY(-2px);
-    }
+      .signup h2 {
+        font-size: 1.2rem;
+        margin-bottom: 0.8rem;
+        color: #333;
+      }
 
-    .signup {
-      margin-top: 2rem;
-    }
+      .signup button {
+        display: flex;
+        text-decoration: none;
+        background: #10b981;
+        color: #fff;
+        padding: 0.75rem 1.5rem;
+        border-radius: 6px;
+        font-weight: bold;
+        transition: background 0.3s ease, transform 0.2s;
+        margin: auto;
+      }
 
-    .signup h2 {
-      font-size: 1.2rem;
-      margin-bottom: 0.8rem;
-      color: #333;
-    }
+      .signup button:hover {
+        background: #059669;
+        transform: translateY(-2px);
+      }
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
+      }
 
-    .signup button {
-      display: flex;
-      text-decoration: none;
-      background: #10b981;
-      color: #fff;
-      padding: 0.75rem 1.5rem;
-      border-radius: 6px;
-      font-weight: bold;
-      transition: background 0.3s ease, transform 0.2s;
-    }
+      .video-section {
+        position: relative;
+        height: 100vh; /* full screen */
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #fff;
+        text-align: center;
+      }
 
-    .signup button:hover {
-      background: #059669;
-      transform: translateY(-2px);
-    }
-    body {
-      margin: 0;
-      padding: 0;
-      font-family: Arial, sans-serif;
-    }
+      .video-section video {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        min-width: 100%;
+        min-height: 100%;
+        width: auto;
+        height: auto;
+        z-index: -1;
+        transform: translate(-50%, -50%);
+        object-fit: cover; /* makes it nicely fill */
+      }
 
-    .video-section {
-      position: relative;
-      height: 100vh; /* full screen */
-      overflow: hidden;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #fff;
-      text-align: center;
-    }
+      .video-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.4); /* dark overlay for readability */
+      }
 
-    .video-section video {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      min-width: 100%;
-      min-height: 100%;
-      width: auto;
-      height: auto;
-      z-index: -1;
-      transform: translate(-50%, -50%);
-      object-fit: cover; /* makes it nicely fill */
-    }
+      .content {
+        position: relative;
+        z-index: 1;
+      }
 
-    .video-overlay {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.4); /* dark overlay for readability */
-    }
+      .content h1 {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+      }
 
-    .content {
-      position: relative;
-      z-index: 1;
-    }
-
-    .content h1 {
-      font-size: 3rem;
-      margin-bottom: 1rem;
-    }
-
-    .content p {
-      font-size: 1.2rem;
-      max-width: 600px;
-      margin: auto;
-    }
-    .hero-container{
-      display: grid;
-      grid-template-columns: repeat(2,1fr);
-
-    }
-    .createuser{
-      margin: auto;
-      padding: 20px;
-      width: 500px;
-      background-color: lightskyblue;
-      justify-items: center;
-    }
-  </style>
+      .content p {
+        font-size: 1.2rem;
+        max-width: 600px;
+        margin: auto;
+      }
+      .hero-container {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .createuser {
+        display: none;
+        position: fixed;
+        top: 0%;
+        left: 40%;
+        justify-content: center;
+        align-items: center;
+        padding: 3rem 1rem;
+        width: 100%;
+        margin: auto;
+        z-index: 50;
+        width: 500px;
+        background-color: lightskyblue;
+      }
+    </style>
   </head>
   <body class="bg-gray-50 text-gray-800">
     <section class="py-0">
       <div class="hero-container bg-gray-50 text-gray-800">
-      <div class="w- mx-0 px-6 text-center bg-gradient-to-r from-indigo-600 to-blue-600 text-white py-10">
-         <img src="Images/WorkScape logo1.png" alt="logo" style="width: 200px; margin-top: 0%;" class="rounded-full">
-        <h1 class="text-4xl md:text-6xl font-bold mb-6"> 
-          Discover Your Next <span class="text-yellow-400">Opportunity</span>
-        </h1>
-     
-        <p class="text-lg md:text-xl mb-8 max-w-2xl mx-auto"> 
-          WorkScape connects you with verified employers and tailored job opportunities across the globe.
-        </p>
-        <div class="flex justify-center gap-4">
-          <a href="" class="bg-yellow-400 text-gray-900 px-6 py-3 rounded-lg font-semibold hover:bg-yellow-300 transition" id="browsebtn">
-            Browse Jobs
-          </a>
-          <button id="postJobsBtn" class="bg-blue-700 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-800 transition">
-            Post Jobs
-          </button>
-        </div>
-      </div>
-      <div class="image-container w- mx-0 px- text-center py-0">
-        <img src="Images/Sarah.jpg" alt="image" style="height: 480px;" class="rounded-full">
+        <div
+          class="w- mx-0 px-6 text-center bg-gradient-to-r from-indigo-600 to-blue-600 text-white py-10"
+        >
+          <img
+            src="Images/WorkScape logo1.png"
+            alt="logo"
+            style="width: 200px; margin-top: 0%"
+            class="rounded-full"
+          />
+          <h1 class="text-4xl md:text-6xl font-bold mb-6">
+            Discover Your Next <span class="text-yellow-400">Opportunity</span>
+          </h1>
 
-      </div>
+          <p class="text-lg md:text-xl mb-8 max-w-2xl mx-auto">
+            WorkScape connects you with verified employers and tailored job
+            opportunities across the globe.
+          </p>
+          <div class="flex justify-center gap-4">
+            <a
+              href=""
+              class="bg-yellow-400 text-gray-900 px-6 py-3 rounded-lg font-semibold hover:bg-yellow-300 transition"
+              id="browsebtn"
+            >
+              Browse Jobs
+            </a>
+            <button
+              id="postJobsBtn"
+              class="bg-blue-700 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-800 transition"
+            >
+              Post Jobs
+            </button>
+          </div>
+        </div>
+        <div class="image-container w- mx-0 px- text-center py-0">
+          <img
+            src="Images/Sarah.jpg"
+            alt="image"
+            style="height: 480px"
+            class="rounded-full"
+          />
+        </div>
       </div>
     </section>
 
     <section class="modal" id="modal">
-  <div class="container mx-auto">
-    <h1>Login to View Job Listings</h1>
-    <form action="">
-      <div>
-        <label for="UserName">Username</label>
-        <input type="text" id="UserName" placeholder="Enter your username">
-      </div>
-      <div>
-        <label for="password">Password</label>
-        <input type="password" id="password" placeholder="Enter your password">
-      </div>
-      <button type="submit" class="btn" id="loginbtn">Log In</button>
-    </form>
-
-    <div class="signup">
-      <h2>New User? Sign Up</h2>
-      <button id="showSignup">Create Account</button>
-    </div>
-  </div>
-</section>
-
-<section class="createuser" id="signupSection" style="display: none;">
-  <div id="signup">
-    <h1 style="text-align: center;padding: 1rem; font-size: larger;"><b>Create User Account</b></h1>
-    <form action="" method="post">
-      <div>
-        <label for="fullname">Full Name</label>
-        <input type="text" id="fullname" name="fullname" placeholder="Enter full name" required />
-      </div>
-
-      <div>
-        <label for="newusername">Username</label>
-        <input type="text" id="newusername" name="username" placeholder="Enter your preferred username" required />
-      </div>
-
-      <div>
-        <label for="email">Email</label>
-        <input type="email" id="email" name="email" placeholder="Enter your email" class="ml-7" required />
-      </div>
-
-      <div>
-        <label for="newpassword">Password</label>
-        <input type="password" id="newpassword" name="password" placeholder="Enter your password" required />
-      </div>
-
-      <div>
-        <label for="cpassword">Confirm Password</label>
-        <input type="password" id="cpassword" name="confirm_password" placeholder="Re-enter your password" required />
-      </div>
-
-      <div class="signup">
-        <button type="submit" class="signupbtn align-center justify-center mx-auto" id="signupbtn">Create Account</button>
-      </div>
-    </form>
-  </div>
-</section>
-
-    <section class="bg-white py-20">
-      <div class="max-w-7xl mx-auto px-6">
-        <h2 class="text-3xl md:text-4xl font-bold text-center text-gray-800 mb-16">
-          Why Choose <span class="text-indigo-600">WorkScape?</span>
-        </h2>
-        <div class="grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
-
-          <div class="bg-gray-50 shadow-lg rounded-2xl p-8 hover:shadow-xl transition">
-            <div class="text-indigo-600 text-4xl mb-4">🌍</div>
-            <h3 class="text-xl font-semibold mb-2">Global Reach</h3>
-            <p class="text-gray-600">Explore job opportunities from verified companies worldwide.</p>
+      <div class="container mx-auto">
+        <h1>Login to View Job Listings</h1>
+        <form action="">
+          <div>
+            <label for="UserName">Username</label>
+            <input
+              type="text"
+              id="UserName"
+              placeholder="Enter your username"
+            />
           </div>
-
-          <div class="bg-gray-50 shadow-lg rounded-2xl p-8 hover:shadow-xl transition">
-            <div class="text-green-600 text-4xl mb-4">✅</div>
-            <h3 class="text-xl font-semibold mb-2">Verified Employers</h3>
-            <p class="text-gray-600">Every listing is screened to ensure legitimacy and trust.</p>
+          <div>
+            <label for="password">Password</label>
+            <input
+              type="password"
+              id="password"
+              placeholder="Enter your password"
+            />
           </div>
+          <button type="submit" class="btn" id="loginbtn">Log In</button>
+        </form>
 
-          <div class="bg-gray-50 shadow-lg rounded-2xl p-8 hover:shadow-xl transition">
-            <div class="text-orange-500 text-4xl mb-4">⚡</div>
-            <h3 class="text-xl font-semibold mb-2">Smart Matching</h3>
-            <p class="text-gray-600">Get matched instantly with roles that fit your profile.</p>
-          </div>
-
-          <div class="bg-gray-50 shadow-lg rounded-2xl p-8 hover:shadow-xl transition">
-            <div class="text-blue-500 text-4xl mb-4">📱</div>
-            <h3 class="text-xl font-semibold mb-2">Seamless Experience</h3>
-            <p class="text-gray-600">Simple search, easy applications, and real-time updates.</p>
-          </div>
-
-          <div class="bg-gray-50 shadow-lg rounded-2xl p-8 hover:shadow-xl transition">
-            <div class="text-pink-500 text-4xl mb-4">💡</div>
-            <h3 class="text-xl font-semibold mb-2">Career Insights</h3>
-            <p class="text-gray-600">Gain access to job market trends and career growth tips.</p>
-          </div>
-
-          <div class="bg-gray-50 shadow-lg rounded-2xl p-8 hover:shadow-xl transition">
-            <div class="text-yellow-500 text-4xl mb-4">🏆</div>
-            <h3 class="text-xl font-semibold mb-2">Proven Success</h3>
-            <p class="text-gray-600">Thousands of professionals have landed jobs through WorkScape.</p>
-          </div>
-
+        <div class="signup">
+          <h2>New User? Sign Up</h2>
+          <button id="showSignup">Create Account</button>
         </div>
       </div>
     </section>
 
-    
+    <section class="createuser" id="signupSection" style="display: none">
+      <div id="signup">
+        <h1 style="text-align: center; padding: 1rem; font-size: larger">
+          <b>Create User Account</b>
+        </h1>
+        <form action="" method="post">
+          <div>
+            <label for="fullname">Full Name</label>
+            <input
+              type="text"
+              id="fullname"
+              name="fullname"
+              placeholder="Enter full name"
+              required
+            />
+          </div>
+
+          <div>
+            <label for="newusername">Username</label>
+            <input
+              type="text"
+              id="newusername"
+              name="username"
+              placeholder="Enter your preferred username"
+              required
+            />
+          </div>
+          <div>
+            <label for="email">Email</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              placeholder="Enter your email"
+              class="ml-7"
+              required
+            />
+          </div>
+          <div>
+            <label for="newpassword">Password</label>
+            <input
+              type="password"
+              id="newpassword"
+              name="password"
+              placeholder="Enter your password"
+              required
+            />
+          </div>
+          <div class="signup">
+            <button
+              type="submit"
+              class="signupbtn align-center justify-center mx-auto"
+              id="signupbtn"
+            >
+              Create Account
+            </button>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <section class="bg-white py-20">
+      <div class="max-w-7xl mx-auto px-6">
+        <h2
+          class="text-3xl md:text-4xl font-bold text-center text-gray-800 mb-16"
+        >
+          Why Choose <span class="text-indigo-600">WorkScape?</span>
+        </h2>
+        <div class="grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
+          <div
+            class="bg-gray-50 shadow-lg rounded-2xl p-8 hover:shadow-xl transition"
+          >
+            <div class="text-indigo-600 text-4xl mb-4">🌍</div>
+            <h3 class="text-xl font-semibold mb-2">Global Reach</h3>
+            <p class="text-gray-600">
+              Explore job opportunities from verified companies worldwide.
+            </p>
+          </div>
+
+          <div
+            class="bg-gray-50 shadow-lg rounded-2xl p-8 hover:shadow-xl transition"
+          >
+            <div class="text-green-600 text-4xl mb-4">✅</div>
+            <h3 class="text-xl font-semibold mb-2">Verified Employers</h3>
+            <p class="text-gray-600">
+              Every listing is screened to ensure legitimacy and trust.
+            </p>
+          </div>
+
+          <div
+            class="bg-gray-50 shadow-lg rounded-2xl p-8 hover:shadow-xl transition"
+          >
+            <div class="text-orange-500 text-4xl mb-4">⚡</div>
+            <h3 class="text-xl font-semibold mb-2">Smart Matching</h3>
+            <p class="text-gray-600">
+              Get matched instantly with roles that fit your profile.
+            </p>
+          </div>
+
+          <div
+            class="bg-gray-50 shadow-lg rounded-2xl p-8 hover:shadow-xl transition"
+          >
+            <div class="text-blue-500 text-4xl mb-4">📱</div>
+            <h3 class="text-xl font-semibold mb-2">Seamless Experience</h3>
+            <p class="text-gray-600">
+              Simple search, easy applications, and real-time updates.
+            </p>
+          </div>
+
+          <div
+            class="bg-gray-50 shadow-lg rounded-2xl p-8 hover:shadow-xl transition"
+          >
+            <div class="text-pink-500 text-4xl mb-4">💡</div>
+            <h3 class="text-xl font-semibold mb-2">Career Insights</h3>
+            <p class="text-gray-600">
+              Gain access to job market trends and career growth tips.
+            </p>
+          </div>
+
+          <div
+            class="bg-gray-50 shadow-lg rounded-2xl p-8 hover:shadow-xl transition"
+          >
+            <div class="text-yellow-500 text-4xl mb-4">🏆</div>
+            <h3 class="text-xl font-semibold mb-2">Proven Success</h3>
+            <p class="text-gray-600">
+              Thousands of professionals have landed jobs through WorkScape.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <section class="bg-indigo-50 py-20">
       <div class="max-w-7xl mx-auto px-6 text-center">
         <h2 class="text-3xl md:text-4xl font-bold mb-12 text-gray-800">
@@ -344,36 +424,50 @@
       </div>
     </section>
 
-    
     <section class="bg-white py-20">
       <div class="max-w-7xl mx-auto px-6">
-        <h2 class="text-3xl md:text-4xl font-bold text-center text-gray-800 mb-16">
+        <h2
+          class="text-3xl md:text-4xl font-bold text-center text-gray-800 mb-16"
+        >
           What Our Users Say
         </h2>
         <div class="grid gap-10 md:grid-cols-3">
           <div class="bg-gray-50 shadow-md p-6 rounded-xl">
-            <p class="text-gray-600 italic">"WorkScape helped me land my dream job in just 2 weeks!"</p>
+            <p class="text-gray-600 italic">
+              "WorkScape helped me land my dream job in just 2 weeks!"
+            </p>
             <h4 class="mt-4 font-semibold text-indigo-600">— Sarah L.</h4>
           </div>
           <div class="bg-gray-50 shadow-md p-6 rounded-xl">
-            <p class="text-gray-600 italic">"The platform is super easy to use and the employers are genuine."</p>
+            <p class="text-gray-600 italic">
+              "The platform is super easy to use and the employers are genuine."
+            </p>
             <h4 class="mt-4 font-semibold text-indigo-600">— James K.</h4>
           </div>
           <div class="bg-gray-50 shadow-md p-6 rounded-xl">
-            <p class="text-gray-600 italic">"I love the career insights and tips. Very helpful!"</p>
+            <p class="text-gray-600 italic">
+              "I love the career insights and tips. Very helpful!"
+            </p>
             <h4 class="mt-4 font-semibold text-indigo-600">— Aisha M.</h4>
           </div>
         </div>
       </div>
     </section>
 
-    
     <footer class="bg-gray-900 text-gray-300 py-10">
-      <div class="max-w-7xl mx-auto px-6 grid sm:grid-cols-2 md:grid-cols-4 gap-8">
+      <div
+        class="max-w-7xl mx-auto px-6 grid sm:grid-cols-2 md:grid-cols-4 gap-8"
+      >
         <div>
           <h4 class="text-white font-semibold mb-4">WorkScape</h4>
-          <p class="text-sm">Connecting job seekers with opportunities worldwide.</p>
-          <img src="Images/WorkScape logo1.png" alt="logo" style="width: 200px;">
+          <p class="text-sm">
+            Connecting job seekers with opportunities worldwide.
+          </p>
+          <img
+            src="Images/WorkScape logo1.png"
+            alt="logo"
+            style="width: 200px"
+          />
         </div>
         <div>
           <h4 class="text-white font-semibold mb-4">Company</h4>
@@ -406,135 +500,253 @@
     </footer>
 
     <section id="SigninEmployer">
-    <!-- ✅ Employer Login Modal -->
-  <div id="employerLoginModal"
-    class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-    <div class="bg-white rounded-lg shadow-lg w-full max-w-md p-8">
-      <h2 class="text-2xl font-semibold text-center text-gray-800 mb-6">
-        Employer Login
-      </h2>
+      <div
+        id="employerLoginModal"
+        class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+      >
+        <div class="bg-white rounded-lg shadow-lg w-full max-w-md p-8">
+          <h2 class="text-2xl font-semibold text-center text-gray-800 mb-6">
+            Employer Login
+          </h2>
 
-      <input type="text" id="employerLoginUser" placeholder="Username"
-        class="mb-4 w-full px-4 py-2 border border-gray-300 rounded" />
+          <input
+            type="text"
+            id="employerLoginUser"
+            placeholder="Username"
+            class="mb-4 w-full px-4 py-2 border border-gray-300 rounded"
+          />
 
-      <input type="password" id="employerLoginPass" placeholder="Password"
-        class="mb-6 w-full px-4 py-2 border border-gray-300 rounded" />
+          <input
+            type="password"
+            id="employerLoginPass"
+            placeholder="Password"
+            class="mb-6 w-full px-4 py-2 border border-gray-300 rounded"
+          />
 
-      <button id="employerLoginBtn"
-        class="w-full bg-indigo-600 text-white py-2 rounded hover:bg-indigo-700">
-        Log In
-      </button>
+          <button
+            id="employerLoginBtn"
+            class="w-full bg-indigo-600 text-white py-2 rounded hover:bg-indigo-700"
+          >
+            Log In
+          </button>
 
-      <p class="mt-4 text-center text-sm text-gray-600">
-        Don’t have an account?
-        <a href="#" id="showEmployerSignup"
-          class="text-indigo-600 hover:underline font-medium">Sign up here</a>
-      </p>
-    </div>
-  </div>
+          <p class="mt-4 text-center text-sm text-gray-600">
+            Don’t have an account?
+            <a
+              href="#"
+              id="showEmployerSignup"
+              class="text-indigo-600 hover:underline font-medium"
+              >Sign up here</a
+            >
+          </p>
+        </div>
+      </div>
     </section>
 
     <section id="SignupEmployer">
-      <div id="employerSignupSection" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-  <div class="bg-white rounded-lg shadow-lg w-full max-w-lg p-8">
-    <h2 class="text-2xl font-semibold text-center text-gray-800 mb-6">Employer Registration</h2>
+      <div
+        id="employerSignupSection"
+        class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+      >
+        <div class="bg-white rounded-lg shadow-lg w-full max-w-lg p-8">
+          <h2 class="text-2xl font-semibold text-center text-gray-800 mb-6">
+            Employer Registration
+          </h2>
 
-    <input type="text" id="employerUsername" placeholder="Username"
-      class="mb-4 w-full px-4 py-2 border border-gray-300 rounded focus:ring-indigo-500 focus:outline-none" />
+          <input
+            type="text"
+            id="employerUsername"
+            placeholder="Username"
+            class="mb-4 w-full px-4 py-2 border border-gray-300 rounded focus:ring-indigo-500 focus:outline-none"
+          />
 
-    <input type="password" id="employerPassword" placeholder="Password"
-      class="mb-4 w-full px-4 py-2 border border-gray-300 rounded focus:ring-indigo-500 focus:outline-none" />
+          <input
+            type="password"
+            id="employerPassword"
+            placeholder="Password"
+            class="mb-4 w-full px-4 py-2 border border-gray-300 rounded focus:ring-indigo-500 focus:outline-none"
+          />
 
-    <input type="text" id="companyName" placeholder="Company Name"
-      class="mb-4 w-full px-4 py-2 border border-gray-300 rounded focus:ring-indigo-500 focus:outline-none" />
+          <input
+            type="text"
+            id="companyName"
+            placeholder="Company Name"
+            class="mb-4 w-full px-4 py-2 border border-gray-300 rounded focus:ring-indigo-500 focus:outline-none"
+          />
 
-    <input type="text" id="companyAddress" placeholder="Company Address"
-      class="mb-4 w-full px-4 py-2 border border-gray-300 rounded focus:ring-indigo-500 focus:outline-none" />
+          <input
+            type="text"
+            id="companyAddress"
+            placeholder="Company Address"
+            class="mb-4 w-full px-4 py-2 border border-gray-300 rounded focus:ring-indigo-500 focus:outline-none"
+          />
 
-    <input type="text" id="employerPosition" placeholder="Your Position"
-      class="mb-4 w-full px-4 py-2 border border-gray-300 rounded focus:ring-indigo-500 focus:outline-none" />
+          <input
+            type="text"
+            id="employerPosition"
+            placeholder="Your Position"
+            class="mb-4 w-full px-4 py-2 border border-gray-300 rounded focus:ring-indigo-500 focus:outline-none"
+          />
 
-    <input type="email" id="employerEmail" placeholder="Email Address"
-      class="mb-6 w-full px-4 py-2 border border-gray-300 rounded focus:ring-indigo-500 focus:outline-none" />
+          <input
+            type="email"
+            id="employerEmail"
+            placeholder="Email Address"
+            class="mb-6 w-full px-4 py-2 border border-gray-300 rounded focus:ring-indigo-500 focus:outline-none"
+          />
 
-    <button id="employerSignupBtn"
-      class="w-full bg-indigo-600 text-white py-2 rounded hover:bg-indigo-700 transition">Sign Up</button>
+          <button
+            id="employerSignupBtn"
+            class="w-full bg-indigo-600 text-white py-2 rounded hover:bg-indigo-700 transition"
+          >
+            Sign Up
+          </button>
 
-    <p class="mt-4 text-center text-sm text-gray-600">
-      Already have an account?
-      <a href="#" id="showEmployerLogin" class="text-indigo-600 hover:underline font-medium">Log in here</a>
-    </p>
-  </div>
-</div>
-
+          <p class="mt-4 text-center text-sm text-gray-600">
+            Already have an account?
+            <a
+              href="#"
+              id="showEmployerLogin"
+              class="text-indigo-600 hover:underline font-medium"
+              >Log in here</a
+            >
+          </p>
+        </div>
+      </div>
     </section>
+
+    <div
+      id="overlay"
+      style="
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 40;
+      "
+    ></div>
     <script src="script.js"></script>
-   <script>
-  document.addEventListener("DOMContentLoaded", () => {
-  const postJobsBtn = document.getElementById("postJobsBtn");
-  const employerLoginModal = document.getElementById("employerLoginModal");
-  const employerSignupSection = document.getElementById("employerSignupSection");
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const postJobsBtn = document.getElementById("postJobsBtn");
+        const employerLoginModal =
+          document.getElementById("employerLoginModal");
+        const employerSignupSection = document.getElementById(
+          "employerSignupSection"
+        );
+        const overlay = document.getElementById("overlay");
 
- document.addEventListener("DOMContentLoaded", () => {
-  const postJobsBtn = document.getElementById("postJobsBtn");
-  const employerLoginModal = document.getElementById("employerLoginModal");
+        if (postJobsBtn) {
+          postJobsBtn.addEventListener("click", (e) => {
+            e.preventDefault();
+            employerLoginModal.classList.remove("hidden");
+            overlay.style.display = "block"; 
+          });
+        }
+        if (overlay) {
+          overlay.addEventListener("click", () => {
+            employerLoginModal.classList.add("hidden");
+            employerSignupSection.classList.add("hidden");
+            overlay.style.display = "none";
+          });
+        }
+        window.addEventListener("click", (event) => {
+          if (event.target === employerLoginModal) {
+            employerLoginModal.classList.add("hidden");
+            overlay.style.display = "none";
+          }
+          if (event.target === employerSignupSection) {
+            employerSignupSection.classList.add("hidden");
+            overlay.style.display = "none";
+          }
+        });
+        document
+          .getElementById("employerSignupBtn")
+          ?.addEventListener("click", () => {
+            const username = document
+              .getElementById("employerUsername")
+              .value.trim();
+            const password = document.getElementById("employerPassword").value;
+            const companyName = document
+              .getElementById("companyName")
+              .value.trim();
+            const companyAddress = document
+              .getElementById("companyAddress")
+              .value.trim();
+            const position = document
+              .getElementById("employerPosition")
+              .value.trim();
+            const email = document.getElementById("employerEmail").value.trim();
 
-  if (postJobsBtn) {
-    postJobsBtn.addEventListener("click", (e) => {
-      e.preventDefault();
-      console.log("✅ Post Jobs button clicked"); // DEBUG
-      employerLoginModal.classList.remove("hidden");
-    });
-  } else {
-    console.error("❌ postJobsBtn not found in DOM");
-  }
-});
-  
-  document.getElementById("employerSignupBtn")?.addEventListener("click", () => {
-    const username = document.getElementById("employerUsername").value.trim();
-    const password = document.getElementById("employerPassword").value;
-    const companyName = document.getElementById("companyName").value.trim();
-    const companyAddress = document.getElementById("companyAddress").value.trim();
-    const position = document.getElementById("employerPosition").value.trim();
-    const email = document.getElementById("employerEmail").value.trim();
+            if (
+              !username ||
+              !password ||
+              !companyName ||
+              !companyAddress ||
+              !position ||
+              !email
+            ) {
+              alert("Please fill in all fields.");
+              return;
+            }
 
-    if (!username || !password || !companyName || !companyAddress || !position || !email) {
-      alert("Please fill in all fields.");
-      return;
-    }
+            localStorage.setItem("employer_username", username);
+            localStorage.setItem("employer_password", password);
+            localStorage.setItem(
+              "employer_profile",
+              JSON.stringify({
+                companyName,
+                companyAddress,
+                position,
+                email,
+              })
+            );
 
-    localStorage.setItem("employer_username", username);
-    localStorage.setItem("employer_password", password);
-    localStorage.setItem("employer_profile", JSON.stringify({
-      companyName,
-      companyAddress,
-      position,
-      email
-    }));
+            alert("Registration successful! You can now log in.");
+            employerSignupSection.classList.add("hidden");
+            employerLoginModal.classList.remove("hidden");
+          });
+          if (overlay) {
+          overlay.addEventListener("click", () => {
+            employerSignupSection.classList.add("hidden");
+            employerSignupSection.classList.add("hidden");
+            overlay.style.display = "none";
+          });
+        }
 
-    alert("Registration successful! You can now log in.");
-    employerSignupSection?.classList.add("hidden");
-    employerLoginModal?.classList.remove("hidden");
-  });
+        document
+          .getElementById("employerLoginBtn")
+          ?.addEventListener("click", () => {
+            const username = document
+              .getElementById("employerLoginUser")
+              .value.trim();
+            const password = document.getElementById("employerLoginPass").value;
 
-  
-  document.getElementById("employerLoginBtn")?.addEventListener("click", () => {
-    const username = document.getElementById("employerLoginUser").value.trim();
-    const password = document.getElementById("employerLoginPass").value;
+            const storedUsername = localStorage.getItem("employer_username");
+            const storedPassword = localStorage.getItem("employer_password");
 
-    const storedUsername = localStorage.getItem("employer_username");
-    const storedPassword = localStorage.getItem("employer_password");
-
-    if (username === storedUsername && password === storedPassword) {
-      alert(`Welcome back, ${storedUsername}!`);
-      window.location.href = "EmployerDashboard.html";
-    } else {
-      alert("Invalid login credentials.");
-    }
-  });
-});
-
-   </script>
-  
+            if (username === storedUsername && password === storedPassword) {
+              alert(`Welcome back, ${storedUsername}!`);
+              window.location.href = "EmployerDashboard.html";
+            } else {
+              alert("Invalid login credentials.");
+            }
+          });
+        document
+          .getElementById("showEmployerSignup")
+          ?.addEventListener("click", (e) => {
+            e.preventDefault();
+            employerLoginModal.classList.add("hidden");
+            employerSignupSection.classList.remove("hidden");
+          });
+        document
+          .getElementById("showEmployerLogin")
+          ?.addEventListener("click", (e) => {
+            e.preventDefault();
+            employerSignupSection.classList.add("hidden");
+            employerLoginModal.classList.remove("hidden");
+          });
+      });
+    </script>
   </body>
 </html>
