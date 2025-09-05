@@ -275,7 +275,7 @@ if (overlay) {
   async fetchJobs() {
     const apiJobs = [];
     try {
-      const res = await fetch(`https://api.adzuna.com/v1/api/jobs/gb/search/1?app_id=54aa27d4&app_key=9889b9d4c1512fac9bfaeeab5c9dc4fc&results_per_page=10&what=remote`);
+      const res = await fetch(`https://api.adzuna.com/v1/api/jobs/gb/search/1?app_id=54aa27d4&app_key=9889b9d4c1512fac9bfaeeab5c9dc4fc&results_per_page=20&what=remote`);
       const data = await res.json();
       apiJobs.push(...(data.results || []));
     } catch (error) {
@@ -299,8 +299,9 @@ if (overlay) {
         jobCard.className = 'job-card bg-blue-50 p-4 rounded shadow mb-4';
         jobCard.innerHTML = `
           <h3 class="text-lg font-semibold">${job.title}</h3>
-          <p class="text-sm text-gray-600">${job.company || 'Unknown Company'}</p>
-          <p class="text-sm">${job.location || 'Unknown Location'}</p>
+          <p class="text-sm text-gray-600">${job.company?.display_name || 'Unknown Company'}</p>
+          <p class="text-sm">${job.location?.display_name || 'Unknown Location'}</p>
+
         `;
 
         const viewBtn = document.createElement('button');
@@ -350,6 +351,30 @@ if (overlay) {
       container.appendChild(card);
     });
   }
+
+  filterJobs() {
+  const filterType = document.getElementById('searchby').value;
+  const query = document.getElementById('searchQuery').value.trim().toLowerCase();
+
+  const filtered = this.allJobs.filter(job => {
+    let field = '';
+
+    if (filterType === 'title') {
+      field = job.title || '';
+    } else if (filterType === 'location') {
+      field = job.location?.display_name || '';
+    } else if (filterType === 'category') {
+    
+      field = job.category?.label || job.description || '';
+    }
+
+    return field.toLowerCase().includes(query);
+  });
+
+  this.displayJobs(filtered);
+}
+
+
 }
 
 document.addEventListener("DOMContentLoaded", () => {
